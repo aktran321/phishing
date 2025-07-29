@@ -71,3 +71,79 @@ Make sure main.py and gophish_config.py are in the same directory. The scripts w
 ```
 python3 main.py
 ```
+
+```
+./gophish
+```
+
+You should receive credentials for admin, which you will change once signed in.
+
+<img width="943" height="132" alt="Screenshot 2025-07-29 062131" src="https://github.com/user-attachments/assets/26cb23f1-b7ab-4315-ab26-99c26cc3e1e4" />
+
+
+## Sending a Phishing Email
+
+First Create a GSuite account (you can use the free 14 day trial).
+- Using G Suite improves your email deliverability, as its trusted infrastructure helps reduce the chances of your emails being marked as spam.
+- Create a Gophish app password google suite
+
+
+  
+## Steps to bypass DigitalOcean firewall
+
+go to 
+```
+admin.google.com
+```
+
+sign in as your admin IT answer
+
+type 
+```
+smtp
+```
+in the search bar
+
+go to
+```
+smtp relay service
+```
+
+scroll down and click `Configure` for the `SMTP Relay Service`
+
+take the public IP of your Kali Linux vm
+```
+curl ifconfig.me
+```
+
+and now configure the settings like so
+<img width="662" height="796" alt="Screenshot 2025-07-23 213928" src="https://github.com/user-attachments/assets/88a347ce-4a83-49c1-b294-a058cc8b11aa" />
+
+
+## Configure New Sending Profile
+Now, in GoPhish, create a new `Sending Profile`
+
+and use your Admins email address with the domain we bought and use for GSuite
+
+```
+admin@khangtran.shop
+```
+
+The `Host` parameter will be localhost instead of Gmail, because DigitalOcean and other cloud providers may just it.
+
+Then the username is the same, and the password is the App password that we just created and got from Gsuite
+
+# Create the Reverse SSH Tunnel
+The ip needed here, is the `public ip of the digital ocean droplet`
+```
+ssh -N -R 2525:smtp-relay.gmail.com:587 root@[digital-ocean-ip]
+```
+
+
+This command logs us into the Droplet running GoPhish and opens a remote port (2525) on the DigitalOcean server, forwarding it to Gmail’s SMTP server on port 587.
+– Since Gmail restricts direct access to its SMTP server from unknown sources, we use this SSH tunnel to route traffic through our local Kali VM. This makes it appear to Gmail as if the traffic originates from our VM rather than the DigitalOcean Droplet.
+
+Below is the Sending Profile settings inside of `GoPhish`.  
+<img width="711" height="542" alt="Screenshot 2025-07-23 215308" src="https://github.com/user-attachments/assets/06f3cf8a-8d87-4ccc-ae72-d6e47c678d9e" />
+
+<img width="641" height="620" alt="Screenshot 2025-07-23 215342" src="https://github.com/user-attachments/assets/a1dfed38-832f-46a8-9c8b-f2b1cc7c6fd5" />
