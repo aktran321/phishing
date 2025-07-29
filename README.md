@@ -141,7 +141,8 @@ ssh -N -R 2525:smtp-relay.gmail.com:587 root@[digital-ocean-ip]
 
 
 This command logs us into the Droplet running GoPhish and opens a remote port (2525) on the DigitalOcean server, forwarding it to Gmail’s SMTP server on port 587.
-– Since Gmail restricts direct access to its SMTP server from unknown sources, we use this SSH tunnel to route traffic through our local Kali VM. This makes it appear to Gmail as if the traffic originates from our VM rather than the DigitalOcean Droplet.
+
+We do this because Gmail restricts SMTP traffic from cloud providers like DigitalOcean, as their IPs are commonly associated with spam and phishing. By routing the traffic through our Kali VM, it appears to Gmail as if it’s coming from a personal machine, which improves the chances of successful delivery.
 
 Below is the Sending Profile settings inside of `GoPhish`.  
 <img width="711" height="542" alt="Screenshot 2025-07-23 215308" src="https://github.com/user-attachments/assets/06f3cf8a-8d87-4ccc-ae72-d6e47c678d9e" />
