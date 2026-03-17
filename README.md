@@ -1,4 +1,4 @@
-# phishing
+# Phishing
 
 This repository is for quickly setting up GoPhish and Evilginx to send phishing campaigns.
 
